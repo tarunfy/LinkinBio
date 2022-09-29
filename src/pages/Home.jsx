@@ -23,7 +23,7 @@ const Home = () => {
           </p>
           <button
             onClick={gooleAuthentication}
-            className="text-xl font-medium hover:scale-95 transition duration-200 !mt-8 px-4 py-2 bg-primary text-white"
+            className="text-xl disabled:bg-primary/50  font-medium hover:scale-95 transition duration-200 !mt-8 px-4 py-2 bg-primary text-white"
           >
             Try for free <ArrowForwardIcon />
           </button>
