@@ -1,9 +1,28 @@
+import { ArrowForwardIcon } from "@chakra-ui/icons";
 import Navbar from "../components/Navbar";
 
 const Home = () => {
   return (
     <>
       <Navbar />
+      <div className="w-full h-screen flex items-center justify-center flex-col">
+        <div className="text-center space-y-4">
+          <h1 className="text-8xl text-gray-800 font-bold max-w-5xl">
+            Make your profile
+            <span className="bg-clip-text block text-transparent bg-gradient-to-r from-blue-500 via-cyan-500 to-cyan-400">
+              wonderful
+            </span>
+          </h1>
+          <p className="text-lg text-gray-600 w-full">
+            Use Linkinbio to create a fully-customizable link in bio web page.
+            Drive traffic from Instagram <br /> & TikTok, track clicks, and
+            more.
+          </p>
+          <button className="text-xl font-medium hover:scale-95 transition duration-200 !mt-8 px-4 py-2 bg-primary text-white">
+            Try for free <ArrowForwardIcon />
+          </button>
+        </div>
+      </div>
     </>
   );
 };

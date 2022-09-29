@@ -1,23 +1,15 @@
-import { Box, Button, Heading } from "@chakra-ui/react";
-
-const containerStyles = {
-  color: "gray.800",
-  display: "flex",
-  justifyContent: "space-between",
-  alignItems: "center",
-  borderBottom: "1px solid gray",
-};
+import { Button } from "@chakra-ui/react";
 
 const Navbar = () => {
   return (
-    <Box w="100%" py="1.5rem" px="6rem" style={containerStyles}>
-      <Heading as="h1" size="lg">
+    <div className="absolute top-0 left-0 px-32 py-5 flex items-center justify-between w-full">
+      <h1 className="text-3xl text-gray-700 tracking-tighter font-semibold">
         LinkInBio
-      </Heading>
-      <Button colorScheme="telegram" variant="outline">
-        Login
+      </h1>
+      <Button colorScheme="blue" variant="outline">
+        Log in
       </Button>
-    </Box>
+    </div>
   );
 };
 

@@ -7,7 +7,7 @@ import { AuthContext } from "./contexts/AuthContext";
 const App = () => {
   const { user } = useContext(AuthContext);
   return (
-    <div>
+    <>
       <Routes>
         <Route
           path="/"
@@ -18,7 +18,7 @@ const App = () => {
           element={user ? <Dashboard /> : <Navigate to="/" />}
         />
       </Routes>
-    </div>
+    </>
   );
 };
 
