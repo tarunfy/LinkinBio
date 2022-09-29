@@ -1,7 +1,10 @@
 import { ArrowForwardIcon } from "@chakra-ui/icons";
+import { useContext } from "react";
 import Navbar from "../components/Navbar";
+import { AuthContext } from "../contexts/AuthContext";
 
 const Home = () => {
+  const { gooleAuthentication } = useContext(AuthContext);
   return (
     <>
       <Navbar />
@@ -18,7 +21,10 @@ const Home = () => {
             Drive traffic from Instagram <br /> & TikTok, track clicks, and
             more.
           </p>
-          <button className="text-xl font-medium hover:scale-95 transition duration-200 !mt-8 px-4 py-2 bg-primary text-white">
+          <button
+            onClick={gooleAuthentication}
+            className="text-xl font-medium hover:scale-95 transition duration-200 !mt-8 px-4 py-2 bg-primary text-white"
+          >
             Try for free <ArrowForwardIcon />
           </button>
         </div>
