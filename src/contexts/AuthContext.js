@@ -4,8 +4,9 @@ import {
   GoogleAuthProvider,
   onAuthStateChanged,
 } from "firebase/auth";
+import { getDoc, doc, setDoc } from "firebase/firestore";
 import { createContext, useEffect, useState } from "react";
-import { auth } from "../config/firebase";
+import { auth, db } from "../config/firebase";
 
 export const AuthContext = createContext(null);
 
@@ -15,8 +16,18 @@ export const AuthProvider = ({ children }) => {
   const [error, setError] = useState("");
 
   useEffect(() => {
-    onAuthStateChanged(auth, (user) => {
+    onAuthStateChanged(auth, async (user) => {
       if (user) {
+        const ref = doc(db, "users", user.uid);
+        const docSnap = await getDoc(ref);
+        if (!docSnap.exists()) {
+          await setDoc(ref, {
+            email: user.email,
+            displayName: user.displayName,
+            photoURL: user.photoURL,
+            uid: user.uid,
+          });
+        }
         setUser({
           email: user.email,
           displayName: user.displayName,
