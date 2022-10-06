@@ -3,6 +3,7 @@ import Home from "./pages/Home";
 import Dashboard from "./pages/Dashboard";
 import { useContext } from "react";
 import { AuthContext } from "./contexts/AuthContext";
+import WalkThrough from "./pages/WalkThrough";
 
 const App = () => {
   const { user } = useContext(AuthContext);
@@ -11,7 +12,11 @@ const App = () => {
       <Routes>
         <Route
           path="/"
-          element={!user ? <Home /> : <Navigate to="/dashboard" />}
+          element={!user ? <Home /> : <Navigate to="/walk-through" />}
+        />
+        <Route
+          path="/walk-through"
+          element={user ? <WalkThrough /> : <Navigate to="/" />}
         />
         <Route
           path="/dashboard"
