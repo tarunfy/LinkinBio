@@ -1,11 +1,28 @@
 import { ArrowForwardIcon } from "@chakra-ui/icons";
 import { Button } from "@chakra-ui/react";
+import { useRef, useState } from "react";
 
-const Form3 = ({ stepCounter, setStepCounter }) => {
+const Form3 = ({ setStepCounter, setDetails }) => {
+  const nameRef = useRef(null);
+  const bioRef = useRef(null);
+
+  const [error, setError] = useState("");
+
   const handleSubmit = (e) => {
     e.preventDefault();
+    setError("");
+    if (!nameRef.current.value || !bioRef.current.value) {
+      setError("Please add all information");
+      return;
+    }
     setStepCounter((prev) => prev + 1);
-    console.log("Counter", stepCounter);
+    setDetails((s) => ({
+      ...s,
+      profile: {
+        name: nameRef.current.value,
+        bio: bioRef.current.value,
+      },
+    }));
   };
   return (
     <div className="h-screen bg-slate-50 flex items-center justify-center">
@@ -22,6 +39,7 @@ const Form3 = ({ stepCounter, setStepCounter }) => {
             Profile name
           </label>
           <input
+            ref={nameRef}
             type="text"
             id="name"
             className="w-full placeholder:text-lg text-lg p-2 rounded-md border"
@@ -32,6 +50,7 @@ const Form3 = ({ stepCounter, setStepCounter }) => {
             Profile bio
           </label>
           <textarea
+            ref={bioRef}
             type="text"
             id="bio"
             className="w-full placeholder:text-lg text-lg p-2 rounded-md border"
@@ -44,6 +63,9 @@ const Form3 = ({ stepCounter, setStepCounter }) => {
         >
           Next <ArrowForwardIcon className="!ml-2" />
         </button>
+        {error && (
+          <p className="text-red-500 text-center text-sm mt-3">{error}</p>
+        )}
         <Button onClick={() => setStepCounter((prev) => prev - 1)}>Back</Button>
       </form>
     </div>

@@ -1,11 +1,21 @@
 import { ArrowForwardIcon } from "@chakra-ui/icons";
+import { useRef, useState } from "react";
 
-const Form1 = ({ setStepCounter, stepCounter }) => {
+const Form1 = ({ setStepCounter, setDetails }) => {
+  const linkRef = useRef(null);
+  const [error, setError] = useState("");
+
   const handleSubmit = (e) => {
     e.preventDefault();
+    setError("");
+    if (!linkRef.current.value) {
+      setError("Please enter a link");
+      return;
+    }
     setStepCounter((prev) => prev + 1);
-    console.log("Counter", stepCounter);
+    setDetails((s) => ({ ...s, link: linkRef.current.value }));
   };
+
   return (
     <div className="h-screen bg-slate-50 flex items-center justify-center">
       <form className="p-10 space-y-5">
@@ -20,6 +30,8 @@ const Form1 = ({ setStepCounter, stepCounter }) => {
             Your link
           </label>
           <input
+            ref={linkRef}
+            required
             type="text"
             id="link"
             className="w-full placeholder:text-lg text-lg p-2 rounded-md border"
@@ -32,6 +44,9 @@ const Form1 = ({ setStepCounter, stepCounter }) => {
         >
           Next <ArrowForwardIcon className="!ml-2" />
         </button>
+        {error && (
+          <p className="text-red-500 text-center text-sm mt-3">{error}</p>
+        )}
       </form>
     </div>
   );

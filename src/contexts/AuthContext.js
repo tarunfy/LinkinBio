@@ -4,7 +4,7 @@ import {
   GoogleAuthProvider,
   onAuthStateChanged,
 } from "firebase/auth";
-import { getDoc, doc, setDoc } from "firebase/firestore";
+import { getDoc, setDoc, doc } from "firebase/firestore";
 import { createContext, useEffect, useState } from "react";
 import { auth, db } from "../config/firebase";
 
@@ -26,6 +26,7 @@ export const AuthProvider = ({ children }) => {
             displayName: user.displayName,
             photoURL: user.photoURL,
             uid: user.uid,
+            details: null,
           });
         }
         setUser({
@@ -55,6 +56,12 @@ export const AuthProvider = ({ children }) => {
     await auth.signOut();
   };
 
+  const fetchCurrentUserDetails = async () => {
+    const docRef = doc(db, "users", user.uid);
+    const res = await getDoc(docRef);
+    setUser(res.data());
+  };
+
   if (isLoading) {
     return (
       <Center h="100vh" w="100vw">
@@ -69,8 +76,10 @@ export const AuthProvider = ({ children }) => {
         user,
         isLoading,
         gooleAuthentication,
+        fetchCurrentUserDetails,
         error,
         logout,
+        setUser,
       }}
     >
       {children}

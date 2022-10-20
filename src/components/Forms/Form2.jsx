@@ -1,12 +1,38 @@
 import { ArrowForwardIcon } from "@chakra-ui/icons";
 import { Button } from "@chakra-ui/react";
+import { useRef, useState } from "react";
 
-const Form2 = ({ stepCounter, setStepCounter }) => {
+const Form2 = ({ setStepCounter, setDetails }) => {
+  const instaRef = useRef(null);
+  const twitterRef = useRef(null);
+  const tiktokRef = useRef(null);
+  const youtubeRef = useRef(null);
+  const [error, setError] = useState("");
+
   const handleSubmit = (e) => {
     e.preventDefault();
+    setError("");
+    if (
+      !instaRef.current.value ||
+      !twitterRef.current.value ||
+      !tiktokRef.current.value ||
+      !youtubeRef.current.value
+    ) {
+      setError("Please add all social handles");
+      return;
+    }
     setStepCounter((prev) => prev + 1);
-    console.log("Counter", stepCounter);
+    setDetails((s) => ({
+      ...s,
+      socials: {
+        insta: instaRef.current.value,
+        twitter: twitterRef.current.value,
+        tiktok: tiktokRef.current.value,
+        youtube: youtubeRef.current.value,
+      },
+    }));
   };
+
   return (
     <div className="h-screen bg-slate-50 flex items-center justify-center">
       <form className="p-10 space-y-5">
@@ -22,6 +48,7 @@ const Form2 = ({ stepCounter, setStepCounter }) => {
             Instagram
           </label>
           <input
+            ref={instaRef}
             type="text"
             id="insta"
             className="w-full placeholder:text-lg text-lg p-2 rounded-md border"
@@ -32,6 +59,7 @@ const Form2 = ({ stepCounter, setStepCounter }) => {
             Twitter
           </label>
           <input
+            ref={twitterRef}
             type="text"
             id="twitter"
             className="w-full placeholder:text-lg text-lg p-2 rounded-md border"
@@ -42,6 +70,7 @@ const Form2 = ({ stepCounter, setStepCounter }) => {
             Tiktok
           </label>
           <input
+            ref={tiktokRef}
             type="text"
             id="tiktok"
             className="w-full placeholder:text-lg text-lg p-2 rounded-md border"
@@ -52,6 +81,7 @@ const Form2 = ({ stepCounter, setStepCounter }) => {
             Youtube
           </label>
           <input
+            ref={youtubeRef}
             type="text"
             id="youtube"
             className="w-full placeholder:text-lg text-lg p-2 rounded-md border"
@@ -64,6 +94,9 @@ const Form2 = ({ stepCounter, setStepCounter }) => {
         >
           Next <ArrowForwardIcon className="!ml-2" />
         </button>
+        {error && (
+          <p className="text-red-500 text-center text-sm mt-3">{error}</p>
+        )}
         <Button onClick={() => setStepCounter((prev) => prev - 1)}>Back</Button>
       </form>
     </div>

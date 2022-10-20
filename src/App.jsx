@@ -16,7 +16,13 @@ const App = () => {
         />
         <Route
           path="/walk-through"
-          element={user ? <WalkThrough /> : <Navigate to="/" />}
+          element={
+            user && !user?.details ? (
+              <WalkThrough />
+            ) : (
+              <Navigate to="/dashboard" />
+            )
+          }
         />
         <Route
           path="/dashboard"
