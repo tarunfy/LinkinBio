@@ -1,9 +1,19 @@
 import { ArrowForwardIcon } from "@chakra-ui/icons";
-import { useRef, useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
+import { AuthContext } from "../../contexts/AuthContext";
 
 const Form1 = ({ setStepCounter, setDetails }) => {
   const linkRef = useRef(null);
   const [error, setError] = useState("");
+
+  const { fetchCurrentUserDetails } = useContext(AuthContext);
+
+  useEffect(() => {
+    async function getDetails() {
+      await fetchCurrentUserDetails();
+    }
+    getDetails();
+  }, []);
 
   const handleSubmit = (e) => {
     e.preventDefault();

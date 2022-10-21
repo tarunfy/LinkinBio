@@ -17,6 +17,7 @@ export const AuthProvider = ({ children }) => {
 
   useEffect(() => {
     onAuthStateChanged(auth, async (user) => {
+      setIsLoading(true);
       if (user) {
         const ref = doc(db, "users", user.uid);
         const docSnap = await getDoc(ref);
@@ -38,6 +39,7 @@ export const AuthProvider = ({ children }) => {
       } else {
         setUser(null);
       }
+      setIsLoading(false);
     });
   }, []);
 
@@ -80,6 +82,7 @@ export const AuthProvider = ({ children }) => {
         error,
         logout,
         setUser,
+        setIsLoading,
       }}
     >
       {children}

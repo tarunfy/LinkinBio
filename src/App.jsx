@@ -26,7 +26,7 @@ const App = () => {
         />
         <Route
           path="/dashboard"
-          element={user ? <Dashboard /> : <Navigate to="/" />}
+          element={user && user?.details ? <Dashboard /> : <Navigate to="/" />}
         />
       </Routes>
     </>
