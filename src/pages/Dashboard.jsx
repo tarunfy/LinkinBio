@@ -1,13 +1,9 @@
-import { useContext } from "react";
-import { AuthContext } from "../contexts/AuthContext";
+import Profile from "../components/Profile";
 
 const Dashboard = () => {
-  const { logout, user } = useContext(AuthContext);
   return (
-    <div>
-      <button onClick={logout}>Logout</button>
-      <h2>{user.displayName}</h2>
-      <img src={user?.photoURL} alt="csd" />
+    <div className="max-w-[800px] mx-auto py-10 space-y-10">
+      <Profile />
     </div>
   );
 };

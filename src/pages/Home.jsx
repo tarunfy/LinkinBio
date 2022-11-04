@@ -17,7 +17,7 @@ const Home = () => {
             </span>
           </h1>
           <p className="text-lg text-gray-600 w-full">
-            Use Linkinbio to create a fully-customizable link in bio web page.
+            Use Supabio to create a fully-customizable link in bio web page.
             Drive traffic from Instagram <br /> & TikTok, track clicks, and
             more.
           </p>
