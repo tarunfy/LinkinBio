@@ -1,49 +1,88 @@
 import { ArrowForwardIcon } from "@chakra-ui/icons";
-import { useContext, useEffect, useRef, useState } from "react";
-import { AuthContext } from "../../contexts/AuthContext";
+import { useRef, useState } from "react";
 
 const Form1 = ({ setStepCounter, setDetails }) => {
-  const linkRef = useRef(null);
+  const instaRef = useRef(null);
+  const twitterRef = useRef(null);
+  const tiktokRef = useRef(null);
+  const youtubeRef = useRef(null);
   const [error, setError] = useState("");
-
-  const { fetchCurrentUserDetails } = useContext(AuthContext);
-
-  useEffect(() => {
-    async function getDetails() {
-      await fetchCurrentUserDetails();
-    }
-    getDetails();
-  }, []);
 
   const handleSubmit = (e) => {
     e.preventDefault();
     setError("");
-    if (!linkRef.current.value) {
-      setError("Please enter a link");
+    if (
+      !instaRef.current.value ||
+      !twitterRef.current.value ||
+      !tiktokRef.current.value ||
+      !youtubeRef.current.value
+    ) {
+      setError("Please add all social handles");
       return;
     }
     setStepCounter((prev) => prev + 1);
-    setDetails((s) => ({ ...s, link: linkRef.current.value }));
+    setDetails((s) => ({
+      ...s,
+      socials: {
+        insta: instaRef.current.value,
+        twitter: twitterRef.current.value,
+        tiktok: tiktokRef.current.value,
+        youtube: youtubeRef.current.value,
+      },
+    }));
   };
 
   return (
     <div className="h-screen bg-slate-50 flex items-center justify-center">
       <form className="p-10 space-y-5">
         <div className="space-y-2">
-          <h1 className="text-[2.5rem] font-medium">Choose Your Unique Link</h1>
-          <p className="text-md text-gray-500">
-            Choose a unique link for your page. This can be edited later.
+          <h1 className="text-4xl font-medium">Add Your Socials</h1>
+          <p className="text-md text-gray-500 max-w-xl">
+            Add your socials media usernames. We will use these details to start
+            building your page for you.
           </p>
         </div>
         <div className="flex items-start space-y-1 flex-col">
-          <label htmlFor="link" className="text-base font-bold">
-            Your link
+          <label htmlFor="insta" className="text-base font-bold">
+            Instagram
           </label>
           <input
-            ref={linkRef}
-            required
+            ref={instaRef}
             type="text"
-            id="link"
+            id="insta"
+            className="w-full placeholder:text-lg text-lg p-2 rounded-md border"
+          />
+        </div>
+        <div className="flex items-start space-y-1 flex-col">
+          <label htmlFor="twitter" className="text-base font-bold">
+            Twitter
+          </label>
+          <input
+            ref={twitterRef}
+            type="text"
+            id="twitter"
+            className="w-full placeholder:text-lg text-lg p-2 rounded-md border"
+          />
+        </div>
+        <div className="flex items-start space-y-1 flex-col">
+          <label htmlFor="tiktok" className="text-base font-bold">
+            Tiktok
+          </label>
+          <input
+            ref={tiktokRef}
+            type="text"
+            id="tiktok"
+            className="w-full placeholder:text-lg text-lg p-2 rounded-md border"
+          />
+        </div>
+        <div className="flex items-start space-y-1 flex-col">
+          <label htmlFor="youtube" className="text-base font-bold">
+            Youtube
+          </label>
+          <input
+            ref={youtubeRef}
+            type="text"
+            id="youtube"
             className="w-full placeholder:text-lg text-lg p-2 rounded-md border"
           />
         </div>

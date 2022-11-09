@@ -1,8 +1,8 @@
 import { useContext, useEffect, useState } from "react";
+
 import Form1 from "../components/Forms/Form1";
 import Form2 from "../components/Forms/Form2";
 import Form3 from "../components/Forms/Form3";
-import Form4 from "../components/Forms/Form4";
 import { AuthContext } from "../contexts/AuthContext";
 
 const WalkThrough = () => {
@@ -34,19 +34,19 @@ const WalkThrough = () => {
   return (
     <>
       {stepCounter === 1 ? (
-        <Form1 setStepCounter={setStepCounter} setDetails={setDetails} />
+        <Form1 setDetails={setDetails} setStepCounter={setStepCounter} />
       ) : stepCounter === 2 ? (
         <Form2 setDetails={setDetails} setStepCounter={setStepCounter} />
       ) : stepCounter === 3 ? (
-        <Form3 setDetails={setDetails} setStepCounter={setStepCounter} />
-      ) : stepCounter === 4 ? (
-        <Form4
+        <Form3
           details={details}
           setDetails={setDetails}
           setStepCounter={setStepCounter}
           stepCounter={stepCounter}
         />
-      ) : null}
+      ) : (
+        <h1>{stepCounter}</h1>
+      )}
     </>
   );
 };

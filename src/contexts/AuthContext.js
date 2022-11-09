@@ -12,6 +12,7 @@ import {
   getDocs,
   query,
   orderBy,
+  where,
 } from "firebase/firestore";
 import { createContext, useEffect, useState } from "react";
 import { auth, db } from "../config/firebase";
@@ -110,6 +111,17 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
+  const checkUsernameTaken = async (username) => {
+    const collectionRef = collection(db, "users");
+    const q = query(
+      collectionRef,
+      where("details.profile.name", "==", username)
+    );
+    const users = await getDocs(q);
+
+    return users.docs.length === 1 ? true : false;
+  };
+
   if (isLoading) {
     return (
       <Center h="100vh" w="100vw">
@@ -121,6 +133,7 @@ export const AuthProvider = ({ children }) => {
   return (
     <AuthContext.Provider
       value={{
+        checkUsernameTaken,
         user,
         isLoading,
         gooleAuthentication,

@@ -1,89 +1,69 @@
 import { ArrowForwardIcon } from "@chakra-ui/icons";
 import { Button } from "@chakra-ui/react";
+import { useContext } from "react";
 import { useRef, useState } from "react";
+import { AuthContext } from "../../contexts/AuthContext";
 
 const Form2 = ({ setStepCounter, setDetails }) => {
-  const instaRef = useRef(null);
-  const twitterRef = useRef(null);
-  const tiktokRef = useRef(null);
-  const youtubeRef = useRef(null);
+  const nameRef = useRef(null);
+  const bioRef = useRef(null);
+  const { checkUsernameTaken } = useContext(AuthContext);
+
   const [error, setError] = useState("");
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     setError("");
-    if (
-      !instaRef.current.value ||
-      !twitterRef.current.value ||
-      !tiktokRef.current.value ||
-      !youtubeRef.current.value
-    ) {
-      setError("Please add all social handles");
+    if (!nameRef.current.value || !bioRef.current.value) {
+      setError("Please add all information");
       return;
     }
+
+    const usernameTaken = await checkUsernameTaken(nameRef.current.value);
+
+    if (usernameTaken) {
+      setError("username already taken");
+      return;
+    }
+
     setStepCounter((prev) => prev + 1);
     setDetails((s) => ({
       ...s,
-      socials: {
-        insta: instaRef.current.value,
-        twitter: twitterRef.current.value,
-        tiktok: tiktokRef.current.value,
-        youtube: youtubeRef.current.value,
+      profile: {
+        name: nameRef.current.value,
+        bio: bioRef.current.value,
       },
     }));
   };
-
   return (
     <div className="h-screen bg-slate-50 flex items-center justify-center">
       <form className="p-10 space-y-5">
         <div className="space-y-2">
-          <h1 className="text-4xl font-medium">Add Your Socials</h1>
-          <p className="text-md text-gray-500 max-w-xl">
-            Add your socials media usernames. We will use these details to start
-            building your page for you.
+          <h1 className="text-4xl font-medium">Create Your Profile</h1>
+          <p className="text-md max-w-md text-gray-500">
+            Please fill in the required details to complete your profile. This
+            can be edited later.
           </p>
         </div>
         <div className="flex items-start space-y-1 flex-col">
-          <label htmlFor="insta" className="text-base font-bold">
-            Instagram
+          <label htmlFor="name" className="text-base font-bold">
+            Profile name
           </label>
           <input
-            ref={instaRef}
+            ref={nameRef}
             type="text"
-            id="insta"
+            id="name"
             className="w-full placeholder:text-lg text-lg p-2 rounded-md border"
           />
         </div>
         <div className="flex items-start space-y-1 flex-col">
-          <label htmlFor="twitter" className="text-base font-bold">
-            Twitter
+          <label htmlFor="bio" className="text-base font-bold">
+            Profile bio
           </label>
-          <input
-            ref={twitterRef}
+          <textarea
+            ref={bioRef}
             type="text"
-            id="twitter"
-            className="w-full placeholder:text-lg text-lg p-2 rounded-md border"
-          />
-        </div>
-        <div className="flex items-start space-y-1 flex-col">
-          <label htmlFor="tiktok" className="text-base font-bold">
-            Tiktok
-          </label>
-          <input
-            ref={tiktokRef}
-            type="text"
-            id="tiktok"
-            className="w-full placeholder:text-lg text-lg p-2 rounded-md border"
-          />
-        </div>
-        <div className="flex items-start space-y-1 flex-col">
-          <label htmlFor="youtube" className="text-base font-bold">
-            Youtube
-          </label>
-          <input
-            ref={youtubeRef}
-            type="text"
-            id="youtube"
+            id="bio"
             className="w-full placeholder:text-lg text-lg p-2 rounded-md border"
           />
         </div>

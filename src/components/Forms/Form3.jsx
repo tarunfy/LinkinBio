@@ -1,60 +1,120 @@
 import { ArrowForwardIcon } from "@chakra-ui/icons";
 import { Button } from "@chakra-ui/react";
-import { useRef, useState } from "react";
+import { useEffect, useState, useContext } from "react";
+import { db } from "../../config/firebase";
+import { updateDoc, doc } from "firebase/firestore";
+import { AuthContext } from "../../contexts/AuthContext";
+import { useNavigate } from "react-router-dom";
 
-const Form3 = ({ setStepCounter, setDetails }) => {
-  const nameRef = useRef(null);
-  const bioRef = useRef(null);
+const Form3 = ({ setStepCounter, setDetails, details }) => {
+  const [themeColor, setThemeColor] = useState("red");
 
-  const [error, setError] = useState("");
+  const { user, setUser, fetchCurrentUserDetails } = useContext(AuthContext);
 
-  const handleSubmit = (e) => {
+  const navigate = useNavigate();
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    setError("");
-    if (!nameRef.current.value || !bioRef.current.value) {
-      setError("Please add all information");
-      return;
-    }
-    setStepCounter((prev) => prev + 1);
-    setDetails((s) => ({
-      ...s,
-      profile: {
-        name: nameRef.current.value,
-        bio: bioRef.current.value,
-      },
-    }));
+    const docRef = doc(db, "users", user.uid);
+    await updateDoc(docRef, {
+      details,
+    });
+    setUser((u) => ({ ...u, details }));
+    await fetchCurrentUserDetails();
+    navigate("/dashboard");
   };
+
+  const handleThemeColor = (color) => {
+    const myColor = color;
+    setThemeColor(myColor);
+  };
+
+  useEffect(() => {
+    setDetails((s) => ({ ...s, themeColor }));
+  }, [themeColor]);
   return (
     <div className="h-screen bg-slate-50 flex items-center justify-center">
       <form className="p-10 space-y-5">
         <div className="space-y-2">
-          <h1 className="text-4xl font-medium">Create Your Profile</h1>
-          <p className="text-md max-w-md text-gray-500">
-            Please fill in the required details to complete your profile. This
-            can be edited later.
+          <h1 className="text-4xl font-medium">Choose Your Theme</h1>
+          <p className="text-md text-gray-500">
+            Select a theme for your page. This can be edited later.
           </p>
         </div>
-        <div className="flex items-start space-y-1 flex-col">
-          <label htmlFor="name" className="text-base font-bold">
-            Profile name
-          </label>
-          <input
-            ref={nameRef}
-            type="text"
-            id="name"
-            className="w-full placeholder:text-lg text-lg p-2 rounded-md border"
-          />
-        </div>
-        <div className="flex items-start space-y-1 flex-col">
-          <label htmlFor="bio" className="text-base font-bold">
-            Profile bio
-          </label>
-          <textarea
-            ref={bioRef}
-            type="text"
-            id="bio"
-            className="w-full placeholder:text-lg text-lg p-2 rounded-md border"
-          />
+        <div className="flex items-center space-x-2">
+          <div
+            onClick={(e) => handleThemeColor(e.target.ariaLabel)}
+            aria-label="red"
+            className={`bg-red-500 cursor-pointer h-32 w-20 rounded-md flex items-center justify-center ${
+              themeColor === "red" && "border-[5px] border-red-600"
+            }`}
+          >
+            <p className="text-white font-bold">Red</p>
+          </div>
+
+          <div
+            onClick={(e) => handleThemeColor(e.target.ariaLabel)}
+            aria-label="green"
+            className={`bg-green-500 cursor-pointer h-32 w-20 rounded-md flex items-center justify-center ${
+              themeColor === "green" && "border-[5px] border-green-600"
+            }`}
+          >
+            <p className="text-white font-bold">Green</p>
+          </div>
+          <div
+            onClick={(e) => handleThemeColor(e.target.ariaLabel)}
+            aria-label="yellow"
+            className={`bg-yellow-500 cursor-pointer h-32 w-20 rounded-md flex items-center justify-center ${
+              themeColor === "yellow" && "border-[5px] border-yellow-600"
+            }`}
+          >
+            <p className="text-white font-bold">Yellow</p>
+          </div>
+          <div
+            onClick={(e) => handleThemeColor(e.target.ariaLabel)}
+            aria-label="blue"
+            className={`bg-blue-500 cursor-pointer h-32 w-20 rounded-md flex items-center justify-center ${
+              themeColor === "blue" && "border-[5px] border-blue-600"
+            }`}
+          >
+            <p className="text-white font-bold">Blue</p>
+          </div>
+          <div
+            onClick={(e) => handleThemeColor(e.target.ariaLabel)}
+            aria-label="cyan"
+            className={`bg-cyan-500 cursor-pointer h-32 w-20 rounded-md flex items-center justify-center ${
+              themeColor === "cyan" && "border-[5px] border-cyan-600"
+            }`}
+          >
+            <p className="text-white font-bold">Cyan</p>
+          </div>
+          <div
+            onClick={(e) => handleThemeColor(e.target.ariaLabel)}
+            aria-label="purple"
+            className={`bg-purple-500 cursor-pointer h-32 w-20 rounded-md flex items-center justify-center ${
+              themeColor === "purple" && "border-[5px] border-purple-600"
+            }`}
+          >
+            <p className="text-white font-bold">Purple</p>
+          </div>
+          <div
+            onClick={(e) => handleThemeColor(e.target.ariaLabel)}
+            aria-label="pink"
+            className={`bg-pink-500 cursor-pointer h-32 w-20 rounded-md flex items-center justify-center ${
+              themeColor === "pink" && "border-[5px] border-pink-600"
+            }`}
+          >
+            <p className="text-white font-bold">Pink</p>
+          </div>
+          <div
+            onClick={(e) => handleThemeColor(e.target.ariaLabel)}
+            aria-label="gray"
+            className={`bg-gray-800 cursor-pointer h-32 w-20 rounded-md flex items-center justify-center ${
+              themeColor === "gray" && "border-[5px] border-black"
+            }`}
+          >
+            <p className="text-white font-bold">Dark</p>
+          </div>
         </div>
         <button
           type="submit"
@@ -63,9 +123,6 @@ const Form3 = ({ setStepCounter, setDetails }) => {
         >
           Next <ArrowForwardIcon className="!ml-2" />
         </button>
-        {error && (
-          <p className="text-red-500 text-center text-sm mt-3">{error}</p>
-        )}
         <Button onClick={() => setStepCounter((prev) => prev - 1)}>Back</Button>
       </form>
     </div>

@@ -4,6 +4,7 @@ import Dashboard from "./pages/Dashboard";
 import { useContext } from "react";
 import { AuthContext } from "./contexts/AuthContext";
 import WalkThrough from "./pages/WalkThrough";
+import View from "./pages/View";
 
 const App = () => {
   const { user } = useContext(AuthContext);
@@ -28,6 +29,7 @@ const App = () => {
           path="/dashboard"
           element={user && user?.details ? <Dashboard /> : <Navigate to="/" />}
         />
+        <Route path="/view/:username" element={<View />} />
       </Routes>
     </>
   );
