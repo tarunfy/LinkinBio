@@ -3,7 +3,14 @@ import { Box, Heading, Text } from "@chakra-ui/react";
 const LinkCard = ({ info }) => {
   return (
     <div>
-      <Box p={5} shadow="md" borderWidth="1px">
+      <Box
+        p={5}
+        shadow="md"
+        borderWidth="1px"
+        backgroundColor="white"
+        textColor="black"
+        borderRadius={4}
+      >
         <Heading fontSize="xl">{info.title}</Heading>
         <Text mt={4}>{info.description}</Text>
         <a

@@ -1,12 +1,7 @@
-import {
-  AiOutlineInstagram,
-  AiOutlineTwitter,
-  AiOutlineYoutube,
-} from "react-icons/ai";
-import { FaTiktok } from "react-icons/fa";
 import { Avatar, Button } from "@chakra-ui/react";
 import { AuthContext } from "../../contexts/AuthContext";
 import { useContext } from "react";
+import Social from "../Cards/Social";
 
 const Profile = () => {
   const { logout, user } = useContext(AuthContext);
@@ -34,41 +29,7 @@ const Profile = () => {
         </div>
         <div className="my-10">
           <div className="flex items-center space-x-3">
-            <a
-              href={`https://www.youtube.com/c/${user.details.socials.youtube}`}
-              className="flex items-center space-x-2 border shadow-sm hover:shadow-md  py-1 px-2 rounded"
-              target="_blank"
-            >
-              <p>Youtube</p>
-              <AiOutlineYoutube />
-            </a>
-
-            <a
-              href={`https://www.twitter.com/${user.details.socials.twitter}`}
-              className="flex items-center space-x-2 border shadow-sm hover:shadow-md py-1 px-2 rounded"
-              target="_blank"
-            >
-              <p>Twitter</p>
-              <AiOutlineTwitter />
-            </a>
-
-            <a
-              href={`https://www.instagram.com/${user.details.socials.insta}`}
-              className="flex items-center space-x-2 border shadow-sm hover:shadow-md py-1 px-2 rounded"
-              target="_blank"
-            >
-              <p>Instagram</p>
-              <AiOutlineInstagram />
-            </a>
-
-            <a
-              href={`https://www.tiktok.com/@${user.details.socials.tiktok}`}
-              className="flex items-center space-x-2 border shadow-sm hover:shadow-md py-1 px-2 rounded"
-              target="_blank"
-            >
-              <p>Tiktok</p>
-              <FaTiktok />
-            </a>
+            <Social socials={user.details.socials} />
           </div>
         </div>
         <div>

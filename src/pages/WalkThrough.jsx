@@ -8,7 +8,6 @@ import { AuthContext } from "../contexts/AuthContext";
 const WalkThrough = () => {
   const [stepCounter, setStepCounter] = useState(1);
   const [details, setDetails] = useState({
-    link: "",
     socials: {
       insta: "",
       twitter: "",

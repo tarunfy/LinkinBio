@@ -24,10 +24,10 @@ const Form1 = ({ setStepCounter, setDetails }) => {
     setDetails((s) => ({
       ...s,
       socials: {
-        insta: instaRef.current.value,
-        twitter: twitterRef.current.value,
-        tiktok: tiktokRef.current.value,
-        youtube: youtubeRef.current.value,
+        insta: `https://www.instagram.com/${instaRef.current.value}`,
+        twitter: `https://www.twitter.com/${twitterRef.current.value}`,
+        tiktok: `https://www.tiktok.com/@${tiktokRef.current.value}`,
+        youtube: `https://www.youtube.com/c/${youtubeRef.current.value}`,
       },
     }));
   };
