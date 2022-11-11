@@ -3,12 +3,12 @@ import { getAuth } from "firebase/auth";
 import { getFirestore } from "firebase/firestore";
 
 const firebaseConfig = {
-  apiKey: process.env.REACT_APP_API_KEY,
-  authDomain: process.env.REACT_APP_AUTH_DOMAIN,
-  projectId: process.env.REACT_APP_PROJECT_ID,
-  storageBucket: process.env.REACT_APP_STORAGE_BUCKET,
-  messagingSenderId: process.env.REACT_APP_MESSAGE_ID,
-  appId: process.env.REACT_APP_ID,
+  apiKey: "AIzaSyALK-4DT-oPrZrHvRsTs5vqmYrB9SnWy5U",
+  authDomain: "supabio-e2a65.firebaseapp.com",
+  projectId: "supabio-e2a65",
+  storageBucket: "supabio-e2a65.appspot.com",
+  messagingSenderId: "769375488283",
+  appId: "1:769375488283:web:7e4ae60ee2c16cb68dabbe",
 };
 
 // Initialize Firebase
