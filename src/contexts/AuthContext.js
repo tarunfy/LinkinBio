@@ -39,6 +39,7 @@ export const AuthProvider = ({ children }) => {
             photoURL: user.photoURL,
             uid: user.uid,
             details: null,
+            viewCount: 0,
           });
         }
         setUser({

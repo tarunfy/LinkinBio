@@ -27,9 +27,14 @@ const Profile = () => {
             </Button>
           </div>
         </div>
-        <div className="my-10">
+        <div className="my-10 space-y-3">
           <div className="flex items-center space-x-3">
             <Social socials={user.details.socials} />
+          </div>
+          <div className="text-base">
+            <h1>
+              View Count: <span className="font-bold">{user?.viewCount}</span>
+            </h1>
           </div>
         </div>
         <div>

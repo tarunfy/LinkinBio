@@ -1,7 +1,15 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { db } from "../config/firebase";
-import { collection, query, where, getDocs } from "firebase/firestore";
+import {
+  collection,
+  query,
+  where,
+  getDocs,
+  updateDoc,
+  increment,
+  doc,
+} from "firebase/firestore";
 import { Avatar } from "@chakra-ui/react";
 import Social from "../components/Cards/Social";
 import LinkCard from "../components/Cards/LinkCard";
@@ -39,14 +47,25 @@ const View = () => {
     getUserData();
   }, []);
 
-  console.log(userInfo);
+  useEffect(() => {
+    (async () => {
+      if (userInfo?.uid) {
+        const docRef = doc(db, "users", userInfo.uid);
+        await updateDoc(docRef, {
+          viewCount: increment(1),
+        });
+      }
+    })();
+  }, [userInfo]);
+
+  if (!userInfo) return <div></div>;
 
   return (
     <div
       style={{ backgroundColor: userInfo?.details.themeColor }}
-      className="flex flex-col justify-start items-center text-white/90 min-h-screen"
+      className="flex flex-col justify-start items-center text-white/90 min-h-screen space-y-10"
     >
-      <div className="flex flex-col justify-center items-center my-20 space-y-5">
+      <div className="flex flex-col justify-center items-center mt-20 space-y-5">
         {userInfo && (
           <Avatar size="xl" src={userInfo?.photoURL} alt="profile photo" />
         )}
